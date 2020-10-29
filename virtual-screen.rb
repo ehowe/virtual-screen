@@ -35,6 +35,32 @@ class VirtualScreen
 
     log_screen
   end
+
+  # TODO: Not tested
+  def find_open_position(temp_row_start, temp_col_start, max_col, max_row, row_span, col_span)
+    p "find_open_position"
+
+    column_position = (col_span === 1) ?
+      find_column(temp_row_start, temp_col_start) : # hor calc
+      temp_col_start # stack up
+
+    row_position = find_row(temp_row_start, column_position)
+    fits_in_section = check_fit(row_position, column_position, row_span, col_span)
+
+    # Not exactly DRY but pragmatic
+    if !fits_in_section && col_span === 1
+      column_position = max_col
+      row_position = find_row(temp_row_start, column_position)
+      fits_in_section = check_fit(row_position, column_position, row_span, col_span)
+    end
+
+    return {
+      column_position: column_position,
+      fits_in_section: fits_in_section,
+      row_position: row_position,
+    }
+  end
+
   def find_column(row, start_column)
     # row is constant
     column_position   = start_column
