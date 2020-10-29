@@ -72,9 +72,13 @@ class VirtualScreen
       }
     end
   end
+
   def log_screen
     p @virtual_screen
   end
+
+  private
+
   def save_position(row_start, col_start, row_span, col_span)
     Array.new(row_span).each_index do |row_span_i|
       Array.new(col_span).each_index do |col_span_i|
