@@ -21,4 +21,7 @@ class VirtualScreen
     end
   end
 
+  def log_screen
+    p @virtual_screen
+  end
 end
