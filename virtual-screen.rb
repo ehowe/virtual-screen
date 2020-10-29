@@ -63,4 +63,29 @@ class VirtualScreen
 
     start_row + i
   end
+
+  # TODO:: Not tested
+  def check_fit(row, column, row_span, col_span)
+    p "check_fit row: #{row}, col: #{column}, rowspan: #{row_span}, rowspan #{col_span}"
+
+    i = row
+    stop = row + row_span - 1 # Minus one becuse the span includes the start
+    positions = []
+    fits
+
+    begin
+      i.upto(stop) do
+        # TODO: drop is not JS slice, check this
+        positions.push(@virtual_screen[i].drop(column, column + col_span))
+        i++
+      end
+
+      #  If there is not a 1 in the array that means all positions are open
+      fits = !positions.flatten.include?(1)
+    rescue
+      fits = false
+    end
+
+    fits
+  end
 end
