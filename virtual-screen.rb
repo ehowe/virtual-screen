@@ -155,11 +155,17 @@ class VirtualScreen
     fits
 
     begin
-      i.upto(stop) do
+      row.upto(stop) do
         # TODO: drop is not JS slice, check this
         positions.push(@virtual_screen[i].drop(column, column + col_span))
         i++
       end
+
+      # while i <= stop do
+      #   # TODO: drop is not JS slice, check this
+      #   positions.push(@virtual_screen[i].drop(column, column + col_span))
+      #   i++
+      # end
 
       #  If there is not a 1 in the array that means all positions are open
       fits = !positions.flatten.include?(1)
