@@ -21,6 +21,57 @@ class VirtualScreen
     end
   end
 
+  # TODO:: not tested
+  def start_position(format, auid, size, row_span, col_span)
+    # Nothing goes in row 1; its for test
+    temp_row_start = 2
+    temp_col_start = 1
+
+    if @active_column === 1
+      temp_col_start = 1
+    elsif @active_column === 2
+      temp_col_start = 3
+    elsif @active_column === 3
+      temp_col_start = 5
+    elsif @active_column === 4
+      temp_col_start = 7
+    elsif @active_column === 5
+      temp_col_start = 9
+    elsif @active_column === 6
+      temp_col_start = 11
+    else
+      p 'nothing else will fit'
+      return false
+    end
+
+    max_col = temp_col_start + 1
+    max_row = 9
+
+    # Large fills a section and always starts at row 4
+    if size === 'large'
+      @active_column += 2 # a large card uses 2 columns
+      temp_row_start = 4
+    end
+
+    position = find_open_position(temp_row_start, temp_col_start, max_col, max_row, row_span, col_span)
+
+    if !position.fits_in_section
+      @active_column++
+      return find_open_position(format, auid, size, row_span, col_span)
+    else
+      # We have a good row position and column position and verified that it fits
+      row_start = position.row_position
+      col_start = position.column_position
+
+      #  Save the content on the virtualScreen matrix
+      save_position(row_start, col_start, row_span, col_span)
+
+      return {
+        row_start: row_start,
+        col_start: col_start,
+      }
+    end
+  end
   def log_screen
     p @virtual_screen
   end
