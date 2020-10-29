@@ -24,4 +24,15 @@ class VirtualScreen
   def log_screen
     p @virtual_screen
   end
+  def save_position(row_start, col_start, row_span, col_span)
+    Array.new(row_span).each_index do |row_span_i|
+      Array.new(col_span).each_index do |col_span_i|
+        row = row_span_i + row_start
+        col = col_span_i + col_start # TODO: we pulled a -1 from here
+        @virtual_screen[row][col] = 1
+      end
+    end
+
+    log_screen
+  end
 end
