@@ -49,4 +49,18 @@ class VirtualScreen
 
     column_position
   end
+
+  def find_row(start_row, column)
+    # column is constant
+    column_index = column - 1
+    possible_rows = @virtual_screen.keys
+      .sort
+      .drop(start_row - 1) # TODO: drop os not JS slice, check this
+
+    i = possible_rows.find_index do |row_number|
+      @virtual_screen[row_number][column_index] == 0
+    end
+
+    start_row + i
+  end
 end
