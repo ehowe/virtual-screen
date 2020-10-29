@@ -35,4 +35,18 @@ class VirtualScreen
 
     log_screen
   end
+  def find_column(row, start_column)
+    # row is constant
+    column_position   = start_column
+    column_index      = start_column - 1
+    next_column_index = start_column
+
+    if @virtual_screen[row][column_index] == 1 && @virtual_screen[row][next_column_index] == 1
+      column_position = start_column
+    elsif @virtual_screen[row][column_index] == 1
+      column_position = start_column + 1
+    end
+
+    column_position
+  end
 end
